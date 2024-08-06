@@ -77,12 +77,16 @@ This effectively filters out the item with the matching key. */
 
     editItem = (index) => { //This function allows editing an item in the list state based on its index.
       const todos = [...this.state.list]; //Creates a copy of the entire list state.
-      const editedTodo = prompt('Edit the todo:'); //Prompts the user to enter an edit value for the todo item.
+      const editedTodo = prompt('Edit the todo:', todos[index].value); //Prompts the user to enter an edit value for the todo item.
       if (editedTodo !== null && editedTodo.trim() !== '') { //This checks if the user entered a valid edit value
         let updatedTodos = [...todos] //Creates another copy of the list for making changes.
+        const previousName = updatedTodos[index].value; // Store the previous name
         updatedTodos[index].value= editedTodo //Updates the value property of the item at the specified index with the new editedTodo value.
         this.setState({ //Updates the component's state with the modified updatedTodos, reflecting the changes in the UI.
           list: updatedTodos,
+          //Add the previous name to the state if needed
+          previousName: previousName
+        
       });
       }
     }
@@ -159,7 +163,10 @@ This effectively filters out the item with the matching key. */
                                         <Button variant = "light"
                                         onClick={() => this.editItem(index)}>
                                           Edit
+
+
                                         </Button>
+                                        
                                         </span>
                                     </ListGroup.Item>
                                   </div>
